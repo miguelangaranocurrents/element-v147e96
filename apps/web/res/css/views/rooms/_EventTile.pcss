@@ -38,12 +38,13 @@ $left-gutter: 64px;
         color: $secondary-content;
     }
 
-    .mx_EventTile_content {
-        &.mx_EditMessageComposer,
-        &.mx_EditWysiwygComposer {
-            /* Make sure the formatting bar is visible */
-            overflow: visible;
-        }
+    .mx_EventTile_content.mx_EditMessageComposer,
+    .mx_EventTile_content.mx_EditWysiwygComposer,
+    .mx_EditMessageComposer,
+    .mx_EditWysiwygComposer {
+        /* Make sure the formatting bar and the autocomplete are visible
+           (the body slot otherwise clips its children) */
+        overflow: visible;
     }
 
     .mx_EventTile_searchHighlight {
@@ -296,7 +297,14 @@ $left-gutter: 64px;
 }
 
 .mx_EventTile_body {
+    /* Let the body shrink to its container so wide code blocks scroll instead of widening the message */
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+
     pre {
+        overflow-x: auto;
+
         border: 1px solid transparent;
 
         .mx_EventTile:hover &,
